@@ -9,7 +9,13 @@
 </head>
 <body>
 
+    <audio id="bg-music" loop>
+        <source src="your-music.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="container">
+        <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
         <header>
             <div class="profile-pic">
                 <img src="profile.png" alt="Profile">
@@ -19,31 +25,38 @@
         </header>
 
         <nav class="links">
+            
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
-            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
-            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
-        </nav>
-
-        <div id="about" class="content-box" style="display: none;">
-            <h3>About Me</h3>
-            <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school. My long-term goal is earning a seat as a Captain for <strong>United Airlines</strong>.</p>
-            <p>When I'm grounded, I'm usually grinding ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
-        </div>
-
-        <div id="projects" class="content-box" style="display: none;">
-            <h3>Creative Projects</h3>
-            <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, specifically focusing on complex rigging and NPR rendering.</p>
-            <p>I also enjoy character design and creating custom fursonas for friends.</p>
-        </div>
-
-        <div id="contact" class="content-box" style="display: none;">
-            <h3>Get In Touch</h3>
-            <div class="contact-buttons">
-                <a href="https://github.com/yourusername" target="_blank" class="link-card contact-btn">Check my GitHub</a>
-                <a href="mailto:your@email.com" class="link-card contact-btn">Send an Email</a>
-                <button class="link-card contact-btn" onclick="copyDiscord()">Copy Discord Tag</button>
+            <div id="about" class="content-box">
+                <div class="content-inner">
+                    <h3>About Me</h3>
+                    <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school. My long-term goal is earning a seat as a Captain for <strong>United Airlines</strong>.</p>
+                    <p>When I'm grounded, I'm usually grinding ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
+                </div>
             </div>
-        </div>
+
+            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
+            <div id="projects" class="content-box">
+                <div class="content-inner">
+                    <h3>Creative Projects</h3>
+                    <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, specifically focusing on complex rigging and NPR rendering.</p>
+                    <p>I also enjoy character design and creating custom fursonas for friends.</p>
+                </div>
+            </div>
+
+            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
+            <div id="contact" class="content-box">
+                <div class="content-inner">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-buttons">
+                        <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
+                        <a href="mailto:your@email.com" class="small-contact-btn">Email</a>
+                        <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
 
         <footer>
             <p>2026 &copy; Built with GitHub</p>
@@ -51,25 +64,40 @@
     </div>
 
     <script>
+        // Accordion Slide Toggle
         function toggleSection(sectionId) {
-            // Get all content boxes
             const sections = document.querySelectorAll('.content-box');
             
             sections.forEach(section => {
                 if (section.id === sectionId) {
-                    // Toggle the clicked one
-                    section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+                    // If it's the one we clicked, toggle the 'active' class
+                    section.classList.toggle('active');
                 } else {
-                    // Close the others to keep it clean
-                    section.style.display = 'none';
+                    // Close all others
+                    section.classList.remove('active');
                 }
             });
         }
 
+        // Discord Copy Function
         function copyDiscord() {
-            const discordTag = "YourUser#0000"; // Replace with your actual tag
+            const discordTag = "YourUser#0000"; // Replace with your tag
             navigator.clipboard.writeText(discordTag);
             alert("Discord tag copied to clipboard!");
+        }
+
+        // Music Play/Pause Logic
+        function toggleMusic() {
+            const music = document.getElementById("bg-music");
+            const btn = document.getElementById("music-btn");
+
+            if (music.paused) {
+                music.play();
+                btn.innerHTML = "⏸️ Pause Music";
+            } else {
+                music.pause();
+                btn.innerHTML = "🎵 Play Music";
+            }
         }
     </script>
 
