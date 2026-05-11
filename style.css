@@ -1,19 +1,22 @@
+/* --- 1. Global Reset & Setup --- */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Outfit', sans-serif;
     color: #4a4a4a;
+    /* Animated Gradient Background: Lavender, Pink, Baby Blue, White */
     background: linear-gradient(-45deg, #E0BBE4, #FFDFD3, #D4F1F4, #FFFFFF);
     background-size: 400% 400%;
     animation: gradientFlow 15s ease infinite;
+    overflow-x: hidden;
 }
 
 @keyframes gradientFlow {
@@ -22,20 +25,47 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+/* --- 2. Main Container --- */
 .container {
-    width: 95%;
-    max-width: 400px;
+    position: relative;
+    width: 90%;
+    max-width: 420px;
     background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.6);
-    padding: 40px 25px;
-    border-radius: 30px;
+    padding: 50px 25px 25px;
+    border-radius: 35px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     text-align: center;
+    margin: 20px;
 }
 
-/* Profile Image */
+/* --- 3. Music Control --- */
+#music-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #6a6a6a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+#music-btn:hover {
+    background: #E0BBE4;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* --- 4. Profile Header --- */
 .profile-pic {
     width: 100px;
     height: 100px;
@@ -45,6 +75,7 @@ body {
     padding: 4px;
     border: 2px solid #E0BBE4;
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .profile-pic img {
@@ -54,14 +85,25 @@ body {
     border-radius: 50%;
 }
 
-h1 { margin: 10px 0 5px; font-size: 1.6rem; color: #333; }
-.tagline { font-size: 0.85rem; margin-bottom: 25px; opacity: 0.7; }
+h1 { 
+    margin: 10px 0 5px; 
+    font-size: 1.7rem; 
+    color: #333; 
+    letter-spacing: -0.5px;
+}
 
-/* Buttons & Links */
-.links, .contact-buttons {
+.tagline { 
+    font-size: 0.85rem; 
+    margin-bottom: 25px; 
+    opacity: 0.7; 
+    font-weight: 500;
+}
+
+/* --- 5. Navigation & Interactive Tabs --- */
+.links {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .link-card {
@@ -69,38 +111,46 @@ h1 { margin: 10px 0 5px; font-size: 1.6rem; color: #333; }
     color: #555;
     text-decoration: none;
     padding: 14px;
-    border-radius: 15px;
+    border-radius: 18px;
     font-weight: 600;
     font-family: 'Outfit', sans-serif;
     font-size: 0.95rem;
-    border: 1px solid rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: block;
     width: 100%;
+    outline: none;
 }
 
 .link-card:hover {
     transform: translateY(-2px);
     background: #E0BBE4;
     color: white;
-    box-shadow: 0 5px 15px rgba(224, 187, 228, 0.4);
+    box-shadow: 0 8px 20px rgba(224, 187, 228, 0.4);
 }
 
-/* The Content Boxes */
+/* --- 6. Slide Effect --- */
 .content-box {
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 18px;
     text-align: left;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    animation: fadeIn 0.4s ease-out;
+    transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+    border: 1px solid transparent;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.content-box.active {
+    max-height: 500px; /* Large enough for text to expand into */
+    opacity: 1;
+    margin: 5px 0 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.content-inner {
+    padding: 20px;
 }
 
 .content-box h3 {
@@ -109,23 +159,50 @@ h1 { margin: 10px 0 5px; font-size: 1.6rem; color: #333; }
     color: #444;
     border-left: 4px solid #E0BBE4;
     padding-left: 10px;
+    margin-bottom: 10px;
 }
 
 .content-box p {
     font-size: 0.85rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: #555;
+    margin-bottom: 10px;
 }
 
-/* Contact Button Adjustment */
-.contact-btn {
-    font-size: 0.85rem;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
+/* --- 7. Compact Contact Buttons --- */
+.contact-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 15px;
 }
 
+.small-contact-btn {
+    flex: 1;
+    text-align: center;
+    background: white;
+    padding: 10px 5px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.small-contact-btn:hover {
+    background: #FFDFD3; /* Soft pink accent on hover */
+    color: #4a4a4a;
+    transform: translateY(-2px);
+}
+
+/* --- 8. Footer --- */
 footer {
-    margin-top: 30px;
+    margin-top: 35px;
     font-size: 0.7rem;
-    opacity: 0.4;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
 }
