@@ -17,9 +17,11 @@
     </div>
 
     <div id="player" class="mini-player">
-        <img id="track-art" src="track-art.png" alt="Art">
-        <div class="track-info">
-            <div id="track-name">Loading...</div>
+        <div class="player-left">
+            <img id="track-art" src="track-art.png" alt="Art">
+        </div>
+        <div class="player-right">
+            <div id="track-name">Song Name</div>
             <div id="track-artist">Artist</div>
         </div>
         <audio id="main-audio"></audio>
@@ -35,13 +37,11 @@
         </header>
 
         <nav class="links">
-            
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
             <div id="about" class="content-box">
                 <div class="content-inner">
                     <h3>About Me</h3>
-                    <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school. My long-term goal is earning a seat as a Captain for <strong>United Airlines</strong>.</p>
-                    <p>When I'm grounded, I'm usually grinding ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
+                    <p>I'm a <strong>student pilot</strong> based in PA, working toward my PPL and a seat at <strong>United Airlines</strong>.</p>
                 </div>
             </div>
 
@@ -49,8 +49,7 @@
             <div id="projects" class="content-box">
                 <div class="content-inner">
                     <h3>Creative Projects</h3>
-                    <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, focusing on complex rigging and NPR rendering.</p>
-                    <p>I also enjoy character design and creating custom fursonas for friends.</p>
+                    <p>I specialize in <strong>3D modeling</strong> and NPR rendering in Blender.</p>
                 </div>
             </div>
 
@@ -60,12 +59,10 @@
                     <h3>Get In Touch</h3>
                     <div class="contact-buttons">
                         <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
-                        <a href="mailto:your@email.com" class="small-contact-btn">Email</a>
                         <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
                     </div>
                 </div>
             </div>
-
         </nav>
 
         <footer>
@@ -74,27 +71,21 @@
     </div>
 
     <script>
-        // 1. Accordion Toggle
         function toggleSection(sectionId) {
             const sections = document.querySelectorAll('.content-box');
-            sections.forEach(section => {
-                if (section.id === sectionId) {
-                    section.classList.toggle('active');
-                } else {
-                    section.classList.remove('active');
-                }
+            sections.forEach(s => {
+                if (s.id === sectionId) s.classList.toggle('active');
+                else s.classList.remove('active');
             });
         }
 
-        // 2. Playlist Logic
         const playlist = [
-            { name: "Song Title 1", artist: "Artist One", src: "song1.mp3", art: "art1.png" },
-            { name: "Song Title 2", artist: "Artist Two", src: "song2.mp3", art: "art2.png" }
+            { name: "Wild Side", artist: "ALI", src: "wildside.mp3", art: "art1.png" }
         ];
 
         let currentTrack = 0;
         const audio = document.getElementById("main-audio");
-        
+
         function loadTrack(index) {
             const track = playlist[index];
             audio.src = track.src;
@@ -105,12 +96,10 @@
 
         function startSite() {
             document.getElementById("overlay").classList.add('fade-out');
-            setTimeout(() => {
-                document.getElementById("overlay").style.display = "none";
-            }, 500);
+            setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
             
             loadTrack(currentTrack);
-            audio.play();
+            audio.play().catch(e => console.log("Audio failed to play:", e));
             document.getElementById("player").classList.add('visible');
         }
 
@@ -119,9 +108,9 @@
             loadTrack(currentTrack);
             audio.play();
         };
-
+        
         function copyDiscord() {
-            navigator.clipboard.writeText("YourUser#0000"); // Change this!
+            navigator.clipboard.writeText("CyraHelifax");
             alert("Discord tag copied!");
         }
     </script>
