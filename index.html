@@ -19,29 +19,29 @@
         </header>
 
         <nav class="links">
-            <a href="#about" class="link-card">✨ About Me</a>
-            <a href="#projects" class="link-card">🚀 Creative Work</a>
-            <a href="#contact" class="link-card">📩 Contact</a>
+            <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
+            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
+            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
         </nav>
 
-        <div id="about" class="content-box">
+        <div id="about" class="content-box" style="display: none;">
             <h3>About Me</h3>
-            <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school on my way to a Private Pilot License. My long-term flight plan? Earning a seat as a Captain for <strong>United Airlines</strong>.</p>
-            <p>When I'm not in the air, you'll find me climbing ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
+            <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school. My long-term goal is earning a seat as a Captain for <strong>United Airlines</strong>.</p>
+            <p>When I'm grounded, I'm usually grinding ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
         </div>
 
-        <div id="projects" class="content-box">
+        <div id="projects" class="content-box" style="display: none;">
             <h3>Creative Projects</h3>
-            <p>I specialize in <strong>3D modeling and animation</strong> using Blender. I'm particularly interested in complex rigging and non-photorealistic (NPR) rendering styles.</p>
-            <p>I also enjoy character design, specifically creating custom fursonas and digital art for friends.</p>
+            <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, specifically focusing on complex rigging and NPR rendering.</p>
+            <p>I also enjoy character design and creating custom fursonas for friends.</p>
         </div>
 
-        <div id="contact" class="content-box">
+        <div id="contact" class="content-box" style="display: none;">
             <h3>Get In Touch</h3>
-            <p>Whether it's about aviation, Blender tips, or gaming, feel free to reach out!</p>
-            <div class="social-grid">
-                <a href="https://github.com/yourusername" target="_blank" class="small-link">GitHub</a>
-                <a href="#" class="small-link">Discord</a>
+            <div class="contact-buttons">
+                <a href="https://github.com/yourusername" target="_blank" class="link-card contact-btn">Check my GitHub</a>
+                <a href="mailto:your@email.com" class="link-card contact-btn">Send an Email</a>
+                <button class="link-card contact-btn" onclick="copyDiscord()">Copy Discord Tag</button>
             </div>
         </div>
 
@@ -49,6 +49,29 @@
             <p>2026 &copy; Built with GitHub</p>
         </footer>
     </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            // Get all content boxes
+            const sections = document.querySelectorAll('.content-box');
+            
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    // Toggle the clicked one
+                    section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+                } else {
+                    // Close the others to keep it clean
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        function copyDiscord() {
+            const discordTag = "YourUser#0000"; // Replace with your actual tag
+            navigator.clipboard.writeText(discordTag);
+            alert("Discord tag copied to clipboard!");
+        }
+    </script>
 
 </body>
 </html>
