@@ -1,208 +1,105 @@
-/* --- 1. Global Reset & Setup --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Bio | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Outfit', sans-serif;
-    color: #4a4a4a;
-    /* Animated Gradient Background */
-    background: linear-gradient(-45deg, #E0BBE4, #FFDFD3, #D4F1F4, #FFFFFF);
-    background-size: 400% 400%;
-    animation: gradientFlow 15s ease infinite;
-    overflow-x: hidden;
-}
+    <audio id="bg-music" loop>
+        <source src="your-music.mp3" type="audio/mpeg">
+    </audio>
 
-@keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+    <div class="container">
+        <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
 
-/* --- 2. Main Container --- */
-.container {
-    position: relative;
-    width: 90%;
-    max-width: 420px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    padding: 50px 25px 25px;
-    border-radius: 35px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    margin: 20px;
-}
+        <header>
+            <div class="profile-pic">
+                <img src="profile.png" alt="Profile">
+            </div>
+            <h1>Your Name</h1>
+            <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
+        </header>
 
-/* --- 3. Music Control --- */
-#music-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #6a6a6a;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
+        <nav class="links">
+            
+            <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
+            <div id="about" class="content-box">
+                <div class="content-inner">
+                    <h3>About Me</h3>
+                    <p>I'm a <strong>student pilot</strong> based in Pennsylvania, currently halfway through ground school. My long-term goal is earning a seat as a Captain for <strong>United Airlines</strong>.</p>
+                    <p>When I'm grounded, I'm usually grinding ranks in <em>Apex Legends</em> or <em>Marvel Rivals</em>.</p>
+                </div>
+            </div>
 
-#music-btn:hover {
-    background: #E0BBE4;
-    color: white;
-    transform: scale(1.05);
-}
+            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
+            <div id="projects" class="content-box">
+                <div class="content-inner">
+                    <h3>Creative Projects</h3>
+                    <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, specifically focusing on complex rigging and NPR rendering.</p>
+                    <p>I also enjoy character design and creating custom fursonas for friends.</p>
+                </div>
+            </div>
 
-/* --- 4. Profile Header --- */
-.profile-pic {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    background: white;
-    padding: 4px;
-    border: 2px solid #E0BBE4;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
+            <div id="contact" class="content-box">
+                <div class="content-inner">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-buttons">
+                        <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
+                        <a href="mailto:your@email.com" class="small-contact-btn">Email</a>
+                        <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
+                    </div>
+                </div>
+            </div>
 
-.profile-pic img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-}
+        </nav>
 
-h1 { 
-    margin: 10px 0 5px; 
-    font-size: 1.7rem; 
-    color: #333; 
-    letter-spacing: -0.5px;
-}
+        <footer>
+            <p>2026 &copy; Built with GitHub</p>
+        </footer>
+    </div>
 
-.tagline { 
-    font-size: 0.85rem; 
-    margin-bottom: 25px; 
-    opacity: 0.7; 
-    font-weight: 500;
-}
+    <script>
+        // Accordion Slide Toggle
+        function toggleSection(sectionId) {
+            const sections = document.querySelectorAll('.content-box');
+            
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    // If it's the one we clicked, toggle the 'active' class
+                    section.classList.toggle('active');
+                } else {
+                    // Close all others
+                    section.classList.remove('active');
+                }
+            });
+        }
 
-/* --- 5. Navigation & Interactive Tabs --- */
-.links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        // Discord Copy Function
+        function copyDiscord() {
+            const discordTag = "YourUser#0000"; // Replace with your tag
+            navigator.clipboard.writeText(discordTag);
+            alert("Discord tag copied to clipboard!");
+        }
 
-.link-card {
-    background: white;
-    color: #555;
-    text-decoration: none;
-    padding: 14px;
-    border-radius: 18px;
-    font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.95rem;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: block;
-    width: 100%;
-    outline: none;
-}
+        // Music Play/Pause Logic
+        function toggleMusic() {
+            const music = document.getElementById("bg-music");
+            const btn = document.getElementById("music-btn");
 
-.link-card:hover {
-    transform: translateY(-2px);
-    background: #E0BBE4;
-    color: white;
-    box-shadow: 0 8px 20px rgba(224, 187, 228, 0.4);
-}
+            if (music.paused) {
+                music.play();
+                btn.innerHTML = "⏸️ Pause Music";
+            } else {
+                music.pause();
+                btn.innerHTML = "🎵 Play Music";
+            }
+        }
+    </script>
 
-/* --- 6. Slide Effect --- */
-.content-box {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 18px;
-    text-align: left;
-    transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
-    border: 1px solid transparent;
-}
-
-.content-box.active {
-    max-height: 500px; /* Large enough for content to breathe */
-    opacity: 1;
-    margin: 5px 0 10px 0;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-}
-
-.content-inner {
-    padding: 20px;
-}
-
-.content-box h3 {
-    margin-top: 0;
-    font-size: 1rem;
-    color: #444;
-    border-left: 4px solid #E0BBE4;
-    padding-left: 10px;
-    margin-bottom: 10px;
-}
-
-.content-box p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-/* --- 7. Compact Contact Buttons --- */
-.contact-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.small-contact-btn {
-    flex: 1;
-    text-align: center;
-    background: white;
-    padding: 10px 5px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #555;
-    font-size: 0.75rem;
-    font-weight: 700;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    transition: all 0.2s ease;
-}
-
-.small-contact-btn:hover {
-    background: #FFDFD3; /* Soft pink hover */
-    color: #4a4a4a;
-    transform: translateY(-2px);
-}
-
-/* --- 8. Footer --- */
-footer {
-    margin-top: 35px;
-    font-size: 0.7rem;
-    opacity: 0.5;
-    letter-spacing: 0.5px;
-}
+</body>
+</html>
