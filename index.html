@@ -17,13 +17,12 @@
     </div>
 
     <div id="player" class="mini-player">
-        <div class="player-left">
-            <img id="track-art" src="art1.png" alt="Art">
-        </div>
-        <div class="player-right">
-            <div id="track-name">Song Name</div>
+        <img id="track-art" src="art1.png" alt="Art">
+        <div class="track-info">
+            <div id="track-name">Loading...</div>
             <div id="track-artist">Artist</div>
         </div>
+        <button id="skip-btn" onclick="nextTrack()" title="Next Song">⏭️</button>
         <audio id="main-audio"></audio>
     </div>
 
@@ -49,14 +48,13 @@
             <div id="projects" class="content-box">
                 <div class="content-inner">
                     <h3>Creative Projects</h3>
-                    <p>I specialize in <strong>3D modeling</strong> and NPR rendering in Blender.</p>
+                    <p>I specialize in <strong>3D modeling</strong> and NPR rendering in Blender 5.0.1. Currently working on a 2D platformer in Unity.</p>
                 </div>
             </div>
 
             <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
             <div id="contact" class="content-box">
                 <div class="content-inner">
-                    <h3>Get In Touch</h3>
                     <div class="contact-buttons">
                         <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
                         <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
@@ -71,6 +69,7 @@
     </div>
 
     <script>
+        // 1. Accordion UI Logic
         function toggleSection(sectionId) {
             const sections = document.querySelectorAll('.content-box');
             sections.forEach(s => {
@@ -79,8 +78,19 @@
             });
         }
 
+        // 2. Music Playlist (6 Slots)
         const playlist = [
-            { name: "Wild Side", artist: "ALI", src: "https://cdn.discordapp.com/attachments/957740452545708073/1503536418134294559/your-track.mp3?ex=6a03b4e8&is=6a026368&hm=28957d3f154d67b723750e9fc5bf364e297afbbf7adc5decebd000ee663a9efe&", art: "art1.png" }
+            { 
+                name: "Wild Side", 
+                artist: "ALI", 
+                src: "https://cdn.discordapp.com/attachments/957740452545708073/1503536418134294559/your-track.mp3?ex=6a03b4e8&is=6a026368&hm=28957d3f154d67b723750e9fc5bf364e297afbbf7adc5decebd000ee663a9efe&", 
+                art: "art1.png" 
+            },
+            { name: "Song 2", artist: "Artist", src: "LINK_HERE", art: "art2.png" },
+            { name: "Song 3", artist: "Artist", src: "LINK_HERE", art: "art3.png" },
+            { name: "Song 4", artist: "Artist", src: "LINK_HERE", art: "art4.png" },
+            { name: "Song 5", artist: "Artist", src: "LINK_HERE", art: "art5.png" },
+            { name: "Song 6", artist: "Artist", src: "LINK_HERE", art: "art6.png" }
         ];
 
         let currentTrack = 0;
@@ -92,25 +102,31 @@
             document.getElementById("track-name").innerText = track.name;
             document.getElementById("track-artist").innerText = track.artist;
             document.getElementById("track-art").src = track.art;
+            audio.load();
         }
 
-        function startSite() {
-            document.getElementById("overlay").classList.add('fade-out');
-            setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
-            
-            loadTrack(currentTrack);
-            audio.play().catch(e => console.log("Audio failed to play:", e));
-            document.getElementById("player").classList.add('visible');
-        }
-
-        audio.onended = () => {
+        function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play();
-        };
-        
+            audio.play().catch(e => console.log("Playback error:", e));
+        }
+
+        async function startSite() {
+            document.getElementById("overlay").classList.add('fade-out');
+            loadTrack(currentTrack);
+            try {
+                await audio.play();
+                document.getElementById("player").classList.add('visible');
+            } catch (err) {
+                console.error("Audio block:", err);
+            }
+            setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
+        }
+
+        audio.onended = () => { nextTrack(); };
+
         function copyDiscord() {
-            navigator.clipboard.writeText("CyraHelifax");
+            navigator.clipboard.writeText("YourUser#0000");
             alert("Discord tag copied!");
         }
     </script>
