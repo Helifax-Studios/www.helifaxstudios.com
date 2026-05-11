@@ -9,13 +9,23 @@
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="your-music.mp3" type="audio/mpeg">
-    </audio>
+    <div id="overlay" onclick="startSite()">
+        <div class="overlay-content">
+            <h1>✨</h1>
+            <p>Click to Enter</p>
+        </div>
+    </div>
+
+    <div id="player" class="mini-player">
+        <img id="track-art" src="track-art.png" alt="Art">
+        <div class="track-info">
+            <div id="track-name">Loading...</div>
+            <div id="track-artist">Artist</div>
+        </div>
+        <audio id="main-audio"></audio>
+    </div>
 
     <div class="container">
-        <button id="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
-
         <header>
             <div class="profile-pic">
                 <img src="profile.png" alt="Profile">
@@ -39,7 +49,7 @@
             <div id="projects" class="content-box">
                 <div class="content-inner">
                     <h3>Creative Projects</h3>
-                    <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, specifically focusing on complex rigging and NPR rendering.</p>
+                    <p>I specialize in <strong>3D modeling and animation</strong> using Blender 5.0.1, focusing on complex rigging and NPR rendering.</p>
                     <p>I also enjoy character design and creating custom fursonas for friends.</p>
                 </div>
             </div>
@@ -64,42 +74,56 @@
     </div>
 
     <script>
-        // Accordion Slide Toggle
+        // 1. Accordion Toggle
         function toggleSection(sectionId) {
             const sections = document.querySelectorAll('.content-box');
-            
             sections.forEach(section => {
                 if (section.id === sectionId) {
-                    // If it's the one we clicked, toggle the 'active' class
                     section.classList.toggle('active');
                 } else {
-                    // Close all others
                     section.classList.remove('active');
                 }
             });
         }
 
-        // Discord Copy Function
-        function copyDiscord() {
-            const discordTag = "YourUser#0000"; // Replace with your tag
-            navigator.clipboard.writeText(discordTag);
-            alert("Discord tag copied to clipboard!");
+        // 2. Playlist Logic
+        const playlist = [
+            { name: "Song Title 1", artist: "Artist One", src: "song1.mp3", art: "art1.png" },
+            { name: "Song Title 2", artist: "Artist Two", src: "song2.mp3", art: "art2.png" }
+        ];
+
+        let currentTrack = 0;
+        const audio = document.getElementById("main-audio");
+        
+        function loadTrack(index) {
+            const track = playlist[index];
+            audio.src = track.src;
+            document.getElementById("track-name").innerText = track.name;
+            document.getElementById("track-artist").innerText = track.artist;
+            document.getElementById("track-art").src = track.art;
         }
 
-        // Music Play/Pause Logic
-        function toggleMusic() {
-            const music = document.getElementById("bg-music");
-            const btn = document.getElementById("music-btn");
+        function startSite() {
+            document.getElementById("overlay").classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById("overlay").style.display = "none";
+            }, 500);
+            
+            loadTrack(currentTrack);
+            audio.play();
+            document.getElementById("player").classList.add('visible');
+        }
 
-            if (music.paused) {
-                music.play();
-                btn.innerHTML = "⏸️ Pause Music";
-            } else {
-                music.pause();
-                btn.innerHTML = "🎵 Play Music";
-            }
+        audio.onended = () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+            audio.play();
+        };
+
+        function copyDiscord() {
+            navigator.clipboard.writeText("YourUser#0000"); // Change this!
+            alert("Discord tag copied!");
         }
     </script>
-
 </body>
 </html>
