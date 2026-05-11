@@ -1,7 +1,5 @@
-/* General Setup */
 * {
     box-sizing: border-box;
-    scroll-behavior: smooth;
 }
 
 body {
@@ -13,8 +11,6 @@ body {
     align-items: center;
     font-family: 'Outfit', sans-serif;
     color: #4a4a4a;
-    
-    /* The Lavender, Pink, Baby Blue & White Moving Gradient */
     background: linear-gradient(-45deg, #E0BBE4, #FFDFD3, #D4F1F4, #FFFFFF);
     background-size: 400% 400%;
     animation: gradientFlow 15s ease infinite;
@@ -28,22 +24,21 @@ body {
 
 .container {
     width: 95%;
-    max-width: 450px;
+    max-width: 400px;
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.6);
     padding: 40px 25px;
-    margin: 20px;
     border-radius: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
-/* Profile Section */
+/* Profile Image */
 .profile-pic {
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
     margin: 0 auto 15px;
     border-radius: 50%;
     background: white;
@@ -59,15 +54,14 @@ body {
     border-radius: 50%;
 }
 
-h1 { margin: 10px 0 5px; font-weight: 700; color: #333; }
-.tagline { font-size: 0.9rem; margin-bottom: 25px; opacity: 0.7; font-weight: 500; }
+h1 { margin: 10px 0 5px; font-size: 1.6rem; color: #333; }
+.tagline { font-size: 0.85rem; margin-bottom: 25px; opacity: 0.7; }
 
-/* Navigation Links */
-.links {
+/* Buttons & Links */
+.links, .contact-buttons {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 30px;
 }
 
 .link-card {
@@ -76,9 +70,14 @@ h1 { margin: 10px 0 5px; font-weight: 700; color: #333; }
     text-decoration: none;
     padding: 14px;
     border-radius: 15px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
     border: 1px solid rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
 }
 
 .link-card:hover {
@@ -88,54 +87,41 @@ h1 { margin: 10px 0 5px; font-weight: 700; color: #333; }
     box-shadow: 0 5px 15px rgba(224, 187, 228, 0.4);
 }
 
-/* Content Sections */
+/* The Content Boxes */
 .content-box {
-    margin-top: 25px;
+    margin-top: 20px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     text-align: left;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .content-box h3 {
     margin-top: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #444;
     border-left: 4px solid #E0BBE4;
     padding-left: 10px;
 }
 
 .content-box p {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: #555;
 }
 
-/* Contact Specifics */
-.social-grid {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.small-link {
-    flex: 1;
-    text-align: center;
-    background: white;
-    padding: 8px;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #E0BBE4;
+/* Contact Button Adjustment */
+.contact-btn {
     font-size: 0.85rem;
-    font-weight: 700;
-    border: 1px solid #E0BBE4;
-    transition: 0.3s;
-}
-
-.small-link:hover {
-    background: #E0BBE4;
-    color: white;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 footer {
