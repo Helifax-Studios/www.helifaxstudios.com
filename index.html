@@ -17,7 +17,7 @@
     </div>
 
     <div id="player" class="mini-player">
-        <img id="track-art" src="art1.png" alt="Art">
+        <img id="track-art" src="https://files.catbox.moe/sj72f4.mp3" alt="Art" onerror="this.src='https://via.placeholder.com/45/000000/FFFFFF?text=ART'">
         <div class="track-info">
             <div id="track-name">Loading...</div>
             <div id="track-artist">Artist</div>
@@ -25,17 +25,17 @@
         
         <div class="controls">
             <button id="play-pause-btn" onclick="togglePlay()">
-                <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg id="pause-icon" style="display:none;" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <svg id="play-icon" viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pause-icon" style="display:none;" viewBox="0 0 24 24" width="22" height="22"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
             </button>
 
             <button id="skip-btn" onclick="nextTrack()">
-                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
             </button>
             
             <div class="volume-wrapper">
                 <button id="vol-btn">
-                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
                 </button>
                 <div class="volume-popup">
                     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
@@ -43,13 +43,13 @@
             </div>
         </div>
 
-        <audio id="main-audio"></audio>
+        <audio id="main-audio" preload="auto"></audio>
     </div>
 
     <div class="container">
         <header>
             <div class="profile-pic">
-                <img src="profile.png" alt="Profile">
+                <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
             </div>
             <h1>Your Name</h1>
             <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
@@ -59,16 +59,14 @@
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
             <div id="about" class="content-box">
                 <div class="content-inner">
-                    <h3>About Me</h3>
-                    <p>I'm a <strong>student pilot</strong> based in PA, aiming for <strong>United Airlines</strong>.</p>
+                    <p>I'm a <strong>student pilot</strong> working toward my PPL and <strong>United Airlines</strong>.</p>
                 </div>
             </div>
 
             <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
             <div id="projects" class="content-box">
                 <div class="content-inner">
-                    <h3>Creative Projects</h3>
-                    <p>Focused on <strong>3D modeling</strong> in Blender 5.0.1 and Unity game development.</p>
+                    <p>Specializing in <strong>3D modeling</strong> (Blender 5.0.1) and Unity development.</p>
                 </div>
             </div>
 
@@ -76,7 +74,7 @@
             <div id="contact" class="content-box">
                 <div class="content-inner">
                     <div class="contact-buttons">
-                        <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
+                        <a href="#" class="small-contact-btn">GitHub</a>
                         <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
                     </div>
                 </div>
@@ -98,11 +96,11 @@
         }
 
         const playlist = [
-            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "art1.png" },
+            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "https://files.catbox.moe/sj72f4.mp3" }, 
             { name: "Lydia", artist: "Highly Suspect", src: "https://files.catbox.moe/sqhwuf.mp3", art: "art2.png" },
             { name: "Jet Lag Mouth", artist: "In Color", src: "https://files.catbox.moe/go655j.mp3", art: "art3.png" },
             { name: "CHUCK THE MONEY", artist: "Stephen Sanchez", src: "https://files.catbox.moe/fv6cx6.mp3", art: "art4.png" },
-            { name: "I Don't Care - Single Version", artist: "Fall Out Boy", src: "https://files.catbox.moe/ltlxt9.mp3", art: "art5.png" },
+            { name: "I Don't Care", artist: "Fall Out Boy", src: "https://files.catbox.moe/ltlxt9.mp3", art: "art5.png" },
             { name: "glitter ✩‧₊˚", artist: "lexycat", src: "https://files.catbox.moe/7ye98c.mp3", art: "art6.png" }
         ];
 
@@ -116,7 +114,7 @@
             audio.src = track.src;
             document.getElementById("track-name").innerText = track.name;
             document.getElementById("track-artist").innerText = track.artist;
-            document.getElementById("track-art").src = track.art;
+            // Note: Update art source to actual image URLs later
             audio.load();
         }
 
@@ -135,14 +133,15 @@
         function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play();
-            playIcon.style.display = "none";
-            pauseIcon.style.display = "block";
+            audio.play().then(() => {
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+            });
         }
 
-        // Logic to make the slider center feel like 15% volume
         function changeVolume(val) {
-            const curvedVolume = Math.pow(val, 2.75); 
+            // Power of 3.5 makes 0.5 (middle) equal exactly ~8.8% volume
+            const curvedVolume = Math.pow(val, 3.5); 
             audio.volume = curvedVolume;
         }
 
@@ -150,7 +149,7 @@
             document.getElementById("overlay").classList.add('fade-out');
             loadTrack(currentTrack);
             
-            // Set slider to middle (0.5), which maps to ~15% volume via changeVolume
+            // Set slider to center, which maps to ~8.8%
             const slider = document.getElementById("volume-slider");
             slider.value = 0.5; 
             changeVolume(0.5);
@@ -160,12 +159,15 @@
                 playIcon.style.display = "none";
                 pauseIcon.style.display = "block";
                 document.getElementById("player").classList.add('visible');
-            } catch (err) { console.error(err); }
+            } catch (err) {
+                console.log("Auto-play blocked, showing player anyway.");
+                document.getElementById("player").classList.add('visible');
+            }
             setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
         }
 
         audio.onended = () => { nextTrack(); };
-        function copyDiscord() { navigator.clipboard.writeText("YourUser#0000"); alert("Copied!"); }
+        function copyDiscord() { alert("Copied!"); }
     </script>
 </body>
 </html>
