@@ -1,91 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Bio | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <div id="overlay" onclick="startSite()">
-        <div class="overlay-content">
-            <h1>✨</h1>
-            <p>Click to Enter</p>
-        </div>
-    </div>
-
-    <div id="player" class="mini-player">
+<div id="player" class="mini-player">
         <img id="track-art" src="art1.png" alt="Art">
         <div class="track-info">
             <div id="track-name">Loading...</div>
             <div id="track-artist">Artist</div>
         </div>
-        <button id="skip-btn" onclick="nextTrack()" title="Next Song">⏭️</button>
+        
+        <div class="controls">
+            <button id="play-pause-btn" onclick="togglePlay()">⏸️</button>
+            <button id="skip-btn" onclick="nextTrack()">⏭️</button>
+            
+            <div class="volume-container">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
+            </div>
+        </div>
+
         <audio id="main-audio"></audio>
     </div>
 
-    <div class="container">
-        <header>
-            <div class="profile-pic">
-                <img src="profile.png" alt="Profile">
-            </div>
-            <h1>Your Name</h1>
-            <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
-        </header>
-
-        <nav class="links">
-            <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
-            <div id="about" class="content-box">
-                <div class="content-inner">
-                    <h3>About Me</h3>
-                    <p>I'm a <strong>student pilot</strong> based in PA, working toward my PPL and a seat at <strong>United Airlines</strong>.</p>
-                </div>
-            </div>
-
-            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
-            <div id="projects" class="content-box">
-                <div class="content-inner">
-                    <h3>Creative Projects</h3>
-                    <p>I specialize in <strong>3D modeling</strong> and NPR rendering in Blender 5.0.1. Currently working on a 2D platformer in Unity.</p>
-                </div>
-            </div>
-
-            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
-            <div id="contact" class="content-box">
-                <div class="content-inner">
-                    <div class="contact-buttons">
-                        <a href="https://github.com/yourusername" target="_blank" class="small-contact-btn">GitHub</a>
-                        <button class="small-contact-btn" onclick="copyDiscord()">Discord</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <footer>
-            <p>2026 &copy; Built with GitHub</p>
-        </footer>
-    </div>
-
     <script>
-        // 1. Accordion UI Logic
-        function toggleSection(sectionId) {
-            const sections = document.querySelectorAll('.content-box');
-            sections.forEach(s => {
-                if (s.id === sectionId) s.classList.toggle('active');
-                else s.classList.remove('active');
-            });
-        }
+        // ... (Keep your toggleSection function here)
 
-        // 2. Music Playlist (6 Slots)
         const playlist = [
-            { 
-                name: "Wild Side", 
-                artist: "ALI", 
-                src: "https://files.catbox.moe/sj72f4.mp3", 
-                art: "art1.png" 
-            },
+            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "art1.png" },
             { name: "Lydia", artist: "Highly Suspect", src: "https://files.catbox.moe/sqhwuf.mp3", art: "art2.png" },
             { name: "Jet Lag Mouth", artist: "In Color", src: "https://files.catbox.moe/go655j.mp3", art: "art3.png" },
             { name: "CHUCK THE MONEY", artist: "Stephen Sanchez", src: "https://files.catbox.moe/fv6cx6.mp3", art: "art4.png" },
@@ -95,6 +31,7 @@
 
         let currentTrack = 0;
         const audio = document.getElementById("main-audio");
+        const playPauseBtn = document.getElementById("play-pause-btn");
 
         function loadTrack(index) {
             const track = playlist[index];
@@ -105,30 +42,39 @@
             audio.load();
         }
 
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerText = "⏸️";
+            } else {
+                audio.pause();
+                playPauseBtn.innerText = "▶️";
+            }
+        }
+
         function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
             loadTrack(currentTrack);
-            audio.play().catch(e => console.log("Playback error:", e));
+            audio.play();
+            playPauseBtn.innerText = "⏸️";
+        }
+
+        function changeVolume(val) {
+            audio.volume = val;
         }
 
         async function startSite() {
             document.getElementById("overlay").classList.add('fade-out');
             loadTrack(currentTrack);
+            audio.volume = 0.5; // Default volume at 50%
             try {
                 await audio.play();
                 document.getElementById("player").classList.add('visible');
-            } catch (err) {
-                console.error("Audio block:", err);
-            }
+            } catch (err) { console.error(err); }
             setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
         }
 
         audio.onended = () => { nextTrack(); };
-
-        function copyDiscord() {
-            navigator.clipboard.writeText("YourUser#0000");
-            alert("Discord tag copied!");
-        }
+        
+        // ... (Keep your copyDiscord function here)
     </script>
-</body>
-</html>
