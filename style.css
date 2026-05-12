@@ -38,7 +38,6 @@ body {
 
 .controls { display: flex; align-items: center; gap: 8px; }
 
-/* Fixed Button/Icon Display */
 .controls button {
     background: none;
     border: none;
@@ -52,8 +51,14 @@ body {
 svg { fill: #444; transition: 0.2s; display: block; }
 button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 
-/* --- Volume Popup --- */
-.volume-wrapper { position: relative; display: flex; align-items: center; }
+/* --- Fixed Volume Popup Logic --- */
+.volume-wrapper { 
+    position: relative; 
+    display: flex; 
+    align-items: center;
+    padding-top: 20px; /* Invisible hover bridge */
+    margin-top: -20px;
+}
 
 .volume-popup {
     position: absolute;
@@ -69,7 +74,12 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     transition: 0.3s;
 }
 
-.volume-wrapper:hover .volume-popup { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+/* This keeps it visible when hovering the wrapper OR the popup itself */
+.volume-wrapper:hover .volume-popup { 
+    opacity: 1; 
+    pointer-events: auto; 
+    transform: translateX(-50%) translateY(0); 
+}
 
 #volume-slider {
     -webkit-appearance: none;
@@ -78,6 +88,7 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     background: #f0f0f0;
     border-radius: 5px;
     outline: none;
+    cursor: pointer;
 }
 
 #volume-slider::-webkit-slider-thumb {
@@ -85,12 +96,11 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     width: 16px; height: 16px;
     background: #9d81ba;
     border-radius: 50%;
-    cursor: pointer;
     border: 3px solid white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* --- Content Container --- */
+/* --- Container Card --- */
 .container {
     width: 90%; max-width: 380px;
     background: rgba(255, 255, 255, 0.6);
@@ -99,7 +109,6 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     border-radius: 40px;
     border: 1px solid white;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
 }
 
 .profile-pic { width: 90px; height: 90px; margin: 0 auto 15px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
