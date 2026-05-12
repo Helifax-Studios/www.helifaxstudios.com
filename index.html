@@ -17,7 +17,7 @@
     </div>
 
     <div id="player" class="mini-player">
-        <img id="track-art" src="https://files.catbox.moe/sj72f4.mp3" alt="Art" onerror="this.src='https://via.placeholder.com/45/000000/FFFFFF?text=ART'">
+        <img id="track-art" src="art1.png" alt="Art" onerror="this.src='https://via.placeholder.com/45/000000/FFFFFF?text=ART'">
         <div class="track-info">
             <div id="track-name">Loading...</div>
             <div id="track-artist">Artist</div>
@@ -59,14 +59,14 @@
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
             <div id="about" class="content-box">
                 <div class="content-inner">
-                    <p>I'm a <strong>student pilot</strong> working toward my PPL and <strong>United Airlines</strong>.</p>
+                    <p>I'm a <strong>student pilot</strong> pursuing a PPL with goals for <strong>United Airlines</strong>.</p>
                 </div>
             </div>
 
             <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
             <div id="projects" class="content-box">
                 <div class="content-inner">
-                    <p>Specializing in <strong>3D modeling</strong> (Blender 5.0.1) and Unity development.</p>
+                    <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and Unity game projects.</p>
                 </div>
             </div>
 
@@ -96,7 +96,7 @@
         }
 
         const playlist = [
-            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "https://files.catbox.moe/sj72f4.mp3" }, 
+            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "art1.png" }, 
             { name: "Lydia", artist: "Highly Suspect", src: "https://files.catbox.moe/sqhwuf.mp3", art: "art2.png" },
             { name: "Jet Lag Mouth", artist: "In Color", src: "https://files.catbox.moe/go655j.mp3", art: "art3.png" },
             { name: "CHUCK THE MONEY", artist: "Stephen Sanchez", src: "https://files.catbox.moe/fv6cx6.mp3", art: "art4.png" },
@@ -114,7 +114,7 @@
             audio.src = track.src;
             document.getElementById("track-name").innerText = track.name;
             document.getElementById("track-artist").innerText = track.artist;
-            // Note: Update art source to actual image URLs later
+            document.getElementById("track-art").src = track.art;
             audio.load();
         }
 
@@ -140,16 +140,14 @@
         }
 
         function changeVolume(val) {
-            // Power of 3.5 makes 0.5 (middle) equal exactly ~8.8% volume
-            const curvedVolume = Math.pow(val, 3.5); 
-            audio.volume = curvedVolume;
+            // Power of 3.5 maps 0.5 (center) to ~0.08 (8%)
+            audio.volume = Math.pow(val, 3.5);
         }
 
         async function startSite() {
             document.getElementById("overlay").classList.add('fade-out');
             loadTrack(currentTrack);
             
-            // Set slider to center, which maps to ~8.8%
             const slider = document.getElementById("volume-slider");
             slider.value = 0.5; 
             changeVolume(0.5);
@@ -160,7 +158,6 @@
                 pauseIcon.style.display = "block";
                 document.getElementById("player").classList.add('visible');
             } catch (err) {
-                console.log("Auto-play blocked, showing player anyway.");
                 document.getElementById("player").classList.add('visible');
             }
             setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
