@@ -51,7 +51,7 @@
             <div class="profile-pic">
                 <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
             </div>
-            <h1>Cyra Helifax</h1>
+            <h1>Cyra Helifax <3</h1>
             <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
         </header>
 
@@ -59,14 +59,14 @@
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
             <div id="about" class="content-box">
                 <div class="content-inner">
-                    <p>I'm a <strong>student pilot</strong> pursuing a PPL with goals for <strong>United Airlines</strong>.</p>
+                    <p>I'm a <strong>student pilot</strong> pursuing a PPL with long-term goals for <strong>United Airlines</strong>.</p>
                 </div>
             </div>
 
             <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
             <div id="projects" class="content-box">
                 <div class="content-inner">
-                    <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and Unity game projects.</p>
+                    <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and Unity platformer projects.</p>
                 </div>
             </div>
 
@@ -144,7 +144,6 @@
             volPopup.classList.toggle('show');
         }
 
-        // Close volume if clicking outside
         window.addEventListener('click', function(e) {
             if (!document.querySelector('.volume-wrapper').contains(e.target)) {
                 volPopup.classList.remove('show');
