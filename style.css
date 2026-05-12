@@ -1,15 +1,21 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
 body {
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Outfit', sans-serif;
-    /* Updated Gradient: Faster & Smoother */
+    
+    /* GRADIENT FIX: Using linear-gradient with large background-size */
     background: linear-gradient(-45deg, #E0BBE4, #FFDFD3, #D4F1F4, #FFFFFF);
-    background-size: 400% 400%;
-    animation: gradientFlow 8s ease infinite;
+    background-size: 400% 400% !important;
+    animation: gradientFlow 10s ease infinite;
+    background-attachment: fixed;
 }
 
 @keyframes gradientFlow {
@@ -49,7 +55,7 @@ body {
 svg { fill: #444; transition: 0.2s; display: block; }
 button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 
-/* --- Click-to-Show Volume --- */
+/* --- Volume Popup --- */
 .volume-wrapper { position: relative; display: flex; align-items: center; }
 .volume-popup {
     position: absolute;
@@ -78,6 +84,7 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     border-radius: 40px;
     border: 1px solid white;
     text-align: center;
+    z-index: 10;
 }
 
 .profile-pic { width: 90px; height: 90px; margin: 0 auto 15px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -91,7 +98,7 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 .content-box.active { max-height: 200px; opacity: 1; margin: 10px 0; }
 .content-inner { padding: 15px; text-align: left; font-size: 0.9rem; color: #666; line-height: 1.5; }
 
-/* --- Fixed Contact Grid --- */
+/* --- Contact Grid --- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
 .contact-btn {
     background: white;
