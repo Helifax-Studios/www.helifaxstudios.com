@@ -10,18 +10,68 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Outfit', sans-serif;
-    
-    /* GRADIENT FIX: Using linear-gradient with large background-size */
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- Moving Background Layer via Pseudo-Element --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400%;
+    height: 400%;
+    z-index: -1;
     background: linear-gradient(-45deg, #E0BBE4, #FFDFD3, #D4F1F4, #FFFFFF);
-    background-size: 400% 400% !important;
-    animation: gradientFlow 10s ease infinite;
-    background-attachment: fixed;
+    background-size: 25% 25%;
+    animation: gradientFlow 8s ease-in-out infinite;
 }
 
 @keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-20%, -20%); }
+    100% { transform: translate(0, 0); }
+}
+
+/* --- Profile Wrap & Instagram-Style Status Bubble --- */
+.profile-container {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto 15px;
+}
+
+.status-bubble {
+    position: absolute;
+    top: -12px;
+    left: 55%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #444;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgba(157, 129, 186, 0.2);
+    white-space: nowrap;
+    z-index: 5;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tiny indicator bubble pointer */
+.status-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 30%;
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: white transparent;
+    display: block;
+    width: 0;
 }
 
 /* --- Mini Player --- */
@@ -87,11 +137,18 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     z-index: 10;
 }
 
-.profile-pic { width: 90px; height: 90px; margin: 0 auto 15px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+/* Expanded layout constraints for pages containing text content blocks */
+.container.wide-layout {
+    max-width: 550px;
+    padding: 30px 20px;
+    margin: 40px 0;
+}
+
+.profile-pic { width: 90px; height: 90px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
 .links { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-.link-card { background: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; color: #444; transition: 0.3s; cursor: pointer; width: 100%; }
+.link-card { background: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; color: #444; transition: 0.3s; cursor: pointer; width: 100%; font-size: 0.95rem; text-align: center;}
 .link-card:hover { background: #9d81ba; color: white; transform: translateY(-2px); }
 
 .content-box { max-height: 0; overflow: hidden; opacity: 0; transition: 0.5s ease; width: 100%; }
@@ -114,6 +171,26 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     transition: 0.2s;
 }
 .contact-btn:hover { background: #f8f8f8; border-color: #9d81ba; color: #9d81ba; }
+
+/* --- Update Feed Elements --- */
+.back-home { display: inline-block; text-decoration: none; color: #9d81ba; font-weight: 700; font-size: 0.9rem; margin-bottom: 20px; transition: 0.2s; }
+.back-home:hover { opacity: 0.7; transform: translateX(-2px); }
+
+.feed-section { text-align: left; margin-top: 25px; }
+.feed-section h2 { font-size: 1.2rem; color: #333; margin-bottom: 12px; border-bottom: 2px solid rgba(157, 129, 186, 0.2); padding-bottom: 4px; }
+
+.history-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.history-item { background: rgba(255,255,255,0.4); padding: 8px 12px; border-radius: 10px; font-size: 0.85rem; color: #555; border-left: 3px solid #9d81ba; }
+
+.blog-card { background: white; padding: 16px; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+.blog-meta { font-size: 0.75rem; color: #aaa; margin-bottom: 4px; font-weight: 500; }
+.blog-card h3 { font-size: 1.05rem; color: #333; margin-bottom: 6px; }
+.blog-card p { font-size: 0.88rem; color: #666; line-height: 1.5; }
+
+.comment-card { background: rgba(255, 255, 255, 0.5); padding: 10px 14px; border-radius: 12px; margin-bottom: 8px; font-size: 0.85rem; }
+.comment-user { font-weight: 700; color: #444; display: inline-block; margin-right: 6px; }
+.comment-date { font-size: 0.7rem; color: #999; float: right; }
+.comment-text { color: #666; margin-top: 3px; }
 
 footer { margin-top: 40px; font-size: 0.7rem; color: #999; }
 #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #eef9fb; z-index: 1000; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.5s; }
