@@ -142,44 +142,116 @@
         const pauseIcon = document.getElementById("pause-icon");
         const volPopup = document.getElementById("volume-popup");
 
+        // Dynamic element pagination setup values
+        const MAX_INITIAL_STATUSES = 3;
+        const MAX_INITIAL_BLOGS = 2;
+        let displayAllStatuses = false;
+        let displayAllBlogs = false;
+        let cachedDataPayload = null;
+
         async function loadLiveStatusAndFeed() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
-                const data = await response.json();
-                
-                document.getElementById('status-bubble').innerText = data.currentStatus || "No live status";
+                cachedDataPayload = await response.json();
+                renderInteractiveSiteInterface();
+            } catch (err) {
+                document.getElementById('status-bubble').innerText = "💤 Offline";
+                console.error("Data pipeline sync issue: ", err);
+            }
+        }
 
-                const historyContainer = document.getElementById('history-container');
-                historyContainer.innerHTML = data.statusHistory.length === 0 ? '<li class="history-item">No archived statuses</li>' : '';
-                data.statusHistory.slice(0, 5).forEach(status => {
+        function renderInteractiveSiteInterface() {
+            if (!cachedDataPayload) return;
+
+            // 1. Render Live Status Box Header Text
+            document.getElementById('status-bubble').innerText = cachedDataPayload.currentStatus || "No live status";
+
+            // 2. Render Previous Status Logs Framework Elements
+            const historyContainer = document.getElementById('history-container');
+            historyContainer.innerHTML = "";
+            
+            const statusesToRender = displayAllStatuses 
+                ? cachedDataPayload.statusHistory 
+                : cachedDataPayload.statusHistory.slice(0, MAX_INITIAL_STATUSES);
+
+            if (cachedDataPayload.statusHistory.length === 0) {
+                historyContainer.innerHTML = '<li class="history-item" style="text-align:center; border-left:none;">No archived statuses</li>';
+            } else {
+                statusesToRender.forEach(status => {
                     const li = document.createElement('li');
                     li.className = 'history-item';
                     li.innerText = status;
                     historyContainer.appendChild(li);
                 });
 
-                const blogContainer = document.getElementById('blog-container');
-                blogContainer.innerHTML = data.blogs.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No updates logged yet.</p>' : '';
-                data.blogs.slice().reverse().forEach(post => {
+                if (cachedDataPayload.statusHistory.length > MAX_INITIAL_STATUSES) {
+                    appendPaginationToggleButton(historyContainer, displayAllStatuses, () => {
+                        displayAllStatuses = !displayAllStatuses;
+                        renderInteractiveSiteInterface();
+                    });
+                }
+            }
+
+            // 3. Render Blog Post Components with Slices Tracking Limits
+            const blogContainer = document.getElementById('blog-container');
+            blogContainer.innerHTML = "";
+            
+            const reversedBlogs = [...cachedDataPayload.blogs].reverse();
+            const blogsToRender = displayAllBlogs 
+                ? reversedBlogs 
+                : reversedBlogs.slice(0, MAX_INITIAL_BLOGS);
+
+            if (reversedBlogs.length === 0) {
+                blogContainer.innerHTML = '<p style="font-size:0.85rem; color:#888; text-align:center; padding:10px;">No updates logged yet.</p>';
+            } else {
+                blogsToRender.forEach(post => {
                     const div = document.createElement('div');
                     div.className = 'blog-card';
                     div.innerHTML = `<div class="blog-meta">${post.date}</div><h3>${post.title}</h3><p>${post.content}</p>`;
                     blogContainer.appendChild(div);
                 });
 
-                const commentsContainer = document.getElementById('comments-container');
-                commentsContainer.innerHTML = data.comments.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No comments left yet.</p>' : '';
-                data.comments.slice().reverse().forEach(comment => {
+                if (reversedBlogs.length > MAX_INITIAL_BLOGS) {
+                    appendPaginationToggleButton(blogContainer, displayAllBlogs, () => {
+                        displayAllBlogs = !displayAllBlogs;
+                        renderInteractiveSiteInterface();
+                    });
+                }
+            }
+
+            // 4. Render Visitor Comments Layout Modules Tree Blocks
+            const commentsContainer = document.getElementById('comments-container');
+            commentsContainer.innerHTML = "";
+            const reversedComments = [...cachedDataPayload.comments].reverse();
+
+            if (reversedComments.length === 0) {
+                commentsContainer.innerHTML = '<p style="font-size:0.85rem; color:#888; text-align:center; padding:10px;">No comments left yet.</p>';
+            } else {
+                reversedComments.forEach(comment => {
                     const div = document.createElement('div');
                     div.className = 'comment-card';
                     div.innerHTML = `<div><span class="comment-user">${comment.user}</span><span class="comment-date">${comment.date}</span></div><div class="comment-text">${comment.text}</div>`;
                     commentsContainer.appendChild(div);
                 });
-
-            } catch (err) {
-                document.getElementById('status-bubble').innerText = "💤 Offline";
-                console.error("Data pipeline sync issue: ", err);
             }
+        }
+
+        function appendPaginationToggleButton(containerElement, currentState, clickHandler) {
+            const btnRow = document.createElement('div');
+            btnRow.style.textAlign = 'center';
+            btnRow.style.marginTop = '10px';
+            btnRow.style.marginBottom = '5px';
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'view-more-toggle-btn';
+            toggleBtn.innerText = currentState ? "▲ Show Less" : "▼ View More";
+            toggleBtn.onclick = (e) => {
+                e.preventDefault();
+                clickHandler();
+            };
+
+            btnRow.appendChild(toggleBtn);
+            containerElement.appendChild(btnRow);
         }
 
         function toggleUpdatesPanel() {
@@ -230,7 +302,7 @@
             audio.play().then(() => {
                 playIcon.style.display = "none";
                 pauseIcon.style.display = "block";
-            });
+            }).catch(err => console.log("Playback interaction waiting."));
         }
 
         function toggleVolume() { volPopup.classList.toggle('show'); }
