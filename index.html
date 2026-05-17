@@ -12,7 +12,7 @@
     <div id="overlay" onclick="startSite()">
         <div class="overlay-content">
             <h1 style="text-align: center;">✨</h1>
-            <p style="text-align: center;">Click to Enter</p>
+            <p style="text-align: center;">Click to Enter Hub</p>
         </div>
     </div>
 
@@ -36,17 +36,16 @@
             <div class="volume-wrapper">
                 <button id="vol-btn" onclick="toggleVolume()">
                     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-                </button>
+            </button>
                 <div id="volume-popup" class="volume-popup">
                     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
                 </div>
             </div>
         </div>
-
         <audio id="main-audio" preload="auto"></audio>
     </div>
 
-    <div class="container">
+    <div id="main-profile-card" class="container">
         <header>
             <div class="profile-container">
                 <div id="status-bubble" class="status-bubble">✨ Loading...</div>
@@ -59,7 +58,7 @@
         </header>
 
         <nav class="links">
-            <a href="updates.html" class="link-card" style="text-decoration: none; display: block;">📰 View Blog & Updates</a>
+            <button class="link-card highlight-card" onclick="openUpdatesPanel()">📰 View Blog & Updates</button>
 
             <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
             <div id="about" class="content-box">
@@ -94,6 +93,34 @@
         </footer>
     </div>
 
+    <div id="updates-panel" class="container wide-layout hidden-panel">
+        <button class="back-home" onclick="closeUpdatesPanel()">← Back to Profile</button>
+        
+        <header style="margin-bottom: 20px;">
+            <h1>Logs & Activity Feed</h1>
+            <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
+        </header>
+
+        <div class="feed-section">
+            <h2>Previous Statuses</h2>
+            <ul id="history-container" class="history-list"></ul>
+        </div>
+
+        <div class="feed-section">
+            <h2>Blog Updates</h2>
+            <div id="blog-container"></div>
+        </div>
+
+        <div class="feed-section">
+            <h2>Comments & Mentions</h2>
+            <div id="comments-container"></div>
+        </div>
+
+        <footer>
+            <p>2026 &copy; Helifax Studios</p>
+        </footer>
+    </div>
+
     <script>
         const playlist = [
             { name: "In My Angel's Eyes", artist: "Ryan Peter Murphy", src: "https://file.garden/agk3lSfMyBH0PDWd/angel%20eyes.mp3", art: "art7.jpg" },
@@ -111,14 +138,61 @@
         const pauseIcon = document.getElementById("pause-icon");
         const volPopup = document.getElementById("volume-popup");
 
-        async function loadLiveStatus() {
+        async function loadLiveStatusAndFeed() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 const data = await response.json();
+                
+                // Set the current landing bubble
                 document.getElementById('status-bubble').innerText = data.currentStatus || "No live status";
+
+                // Setup the archived status column logs
+                const historyContainer = document.getElementById('history-container');
+                historyContainer.innerHTML = data.statusHistory.length === 0 ? '<li class="history-item">No archived statuses</li>' : '';
+                data.statusHistory.slice(0, 5).forEach(status => {
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    li.innerText = status;
+                    historyContainer.appendChild(li);
+                });
+
+                // Setup the blogs layer grid
+                const blogContainer = document.getElementById('blog-container');
+                blogContainer.innerHTML = data.blogs.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No updates logged yet.</p>' : '';
+                data.blogs.slice().reverse().forEach(post => {
+                    const div = document.createElement('div');
+                    div.className = 'blog-card';
+                    div.innerHTML = `<div class="blog-meta">${post.date}</div><h3>${post.title}</h3><p>${post.content}</p>`;
+                    blogContainer.appendChild(div);
+                });
+
+                // Setup guestbook comments logs
+                const commentsContainer = document.getElementById('comments-container');
+                commentsContainer.innerHTML = data.comments.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No comments left yet.</p>' : '';
+                data.comments.slice().reverse().forEach(comment => {
+                    const div = document.createElement('div');
+                    div.className = 'comment-card';
+                    div.innerHTML = `<div><span class="comment-user">${comment.user}</span><span class="comment-date">${comment.date}</span></div><div class="comment-text">${comment.text}</div>`;
+                    commentsContainer.appendChild(div);
+                });
+
             } catch (err) {
                 document.getElementById('status-bubble').innerText = "💤 Offline";
+                console.error("Data pipeline sync issue: ", err);
             }
+        }
+
+        // Panel toggle interactions
+        function openUpdatesPanel() {
+            document.getElementById('main-profile-card').style.display = 'none';
+            document.getElementById('updates-panel').classList.remove('hidden-panel');
+            window.scrollTo(0,0);
+        }
+
+        function closeUpdatesPanel() {
+            document.getElementById('updates-panel').classList.add('hidden-panel');
+            document.getElementById('main-profile-card').style.display = 'block';
+            window.scrollTo(0,0);
         }
 
         function toggleSection(sectionId) {
@@ -143,24 +217,19 @@
                 audio.play();
                 playIcon.style.display = "none";
                 pauseIcon.style.display = "block";
-                localStorage.setItem('music_playing', 'true');
             } else {
                 audio.pause();
                 playIcon.style.display = "block";
                 pauseIcon.style.display = "none";
-                localStorage.setItem('music_playing', 'false');
             }
         }
 
         function nextTrack() {
             currentTrack = (currentTrack + 1) % playlist.length;
-            localStorage.setItem('music_track_index', currentTrack);
-            localStorage.setItem('music_position', '0');
             loadTrack(currentTrack);
             audio.play().then(() => {
                 playIcon.style.display = "none";
                 pauseIcon.style.display = "block";
-                localStorage.setItem('music_playing', 'true');
             });
         }
 
@@ -174,54 +243,29 @@
 
         function changeVolume(val) {
             audio.volume = Math.pow(val, 3.5);
-            localStorage.setItem('music_volume', val);
         }
-
-        audio.addEventListener('timeupdate', () => {
-            localStorage.setItem('music_position', audio.currentTime);
-        });
 
         async function startSite() {
             document.getElementById("overlay").classList.add('fade-out');
-            
-            currentTrack = parseInt(localStorage.getItem('music_track_index') || '0');
-            const savedPosition = parseFloat(localStorage.getItem('music_position') || '0');
-            const wasPlaying = localStorage.getItem('music_playing') === 'true';
-            const savedVolume = localStorage.getItem('music_volume') || '0.5';
-
             loadTrack(currentTrack);
-            audio.currentTime = savedPosition;
-            
-            const slider = document.getElementById("volume-slider");
-            slider.value = savedVolume; 
-            changeVolume(savedVolume);
+            changeVolume(0.5);
 
-            if (wasPlaying || localStorage.getItem('music_playing') === null) {
-                try {
-                    await audio.play();
-                    playIcon.style.display = "none";
-                    pauseIcon.style.display = "block";
-                    localStorage.setItem('music_playing', 'true');
-                    document.getElementById("player").classList.add('visible');
-                } catch (err) {
-                    document.getElementById("player").classList.add('visible');
-                }
-            } else {
-                document.getElementById("player").classList.add('visible');
+            try {
+                await audio.play();
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+            } catch (err) {
+                console.log("Interaction required to audio track trigger.");
             }
             
+            document.getElementById("player").classList.add('visible');
             setTimeout(() => { document.getElementById("overlay").style.display = "none"; }, 500);
         }
 
         audio.onended = () => { nextTrack(); };
         function copyDiscord() { alert("Copied Discord Username!"); }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadLiveStatus();
-            if (localStorage.getItem('overlay_bypassed') === 'true') {
-                startSite();
-            }
-        });
+        window.addEventListener('DOMContentLoaded', loadLiveStatusAndFeed);
     </script>
 </body>
 </html>
