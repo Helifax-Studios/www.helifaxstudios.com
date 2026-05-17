@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates & Logs | Cyra</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container wide-layout">
+        <a href="index.html" class="back-home">← Back to Profile</a>
+        
+        <header style="margin-bottom: 20px;">
+            <h1>Logs & Activity Feed</h1>
+            <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
+        </header>
+
+        <div class="feed-section">
+            <h2>Previous Statuses</h2>
+            <ul id="history-container" class="history-list">
+                </ul>
+        </div>
+
+        <div class="feed-section">
+            <h2>Blog Updates</h2>
+            <div id="blog-container">
+                </div>
+        </div>
+
+        <div class="feed-section">
+            <h2>Comments & Mentions</h2>
+            <div id="comments-container">
+                </div>
+        </div>
+
+        <footer>
+            <p>2026 &copy; Helifax Studios</p>
+        </footer>
+    </div>
+
+    <script>
+        async function fetchFeedData() {
+            try {
+                const response = await fetch('data.json?t=' + new Date().getTime());
+                const data = await response.json();
+
+                // 1. Map Status History
+                const historyContainer = document.getElementById('history-container');
+                historyContainer.innerHTML = data.statusHistory.length === 0 ? '<li class="history-item">No archived statuses</li>' : '';
+                data.statusHistory.slice(0, 5).forEach(status => {
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    li.innerText = status;
+                    historyContainer.appendChild(li);
+                });
+
+                // 2. Map Blog Cards
+                const blogContainer = document.getElementById('blog-container');
+                blogContainer.innerHTML = data.blogs.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No updates logged yet.</p>' : '';
+                data.blogs.reverse().forEach(post => {
+                    const div = document.createElement('div');
+                    div.className = 'blog-card';
+                    div.innerHTML = `
+                        <div class="blog-meta">${post.date}</div>
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                    `;
+                    blogContainer.appendChild(div);
+                });
+
+                // 3. Map Guestbook comments
+                const commentsContainer = document.getElementById('comments-container');
+                commentsContainer.innerHTML = data.comments.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No comments left yet.</p>' : '';
+                data.comments.reverse().forEach(comment => {
+                    const div = document.createElement('div');
+                    div.className = 'comment-card';
+                    div.innerHTML = `
+                        <div>
+                            <span class="comment-user">${comment.user}</span>
+                            <span class="comment-date">${comment.date}</span>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                    `;
+                    commentsContainer.appendChild(div);
+                });
+
+            } catch (err) {
+                console.error("Failed parsing status stream data file:", err);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', fetchFeedData);
+    </script>
+</body>
+</html>
