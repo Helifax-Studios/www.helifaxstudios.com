@@ -1,0 +1,22 @@
+{
+  "currentStatus": "Dreaming up code & working on updates! ✨",
+  "statusHistory": [
+    "Thinking about Blender rigs...",
+    "Ground school studying day ✈️"
+  ],
+  "blogs": [
+    {
+      "id": 1,
+      "date": "May 16, 2026",
+      "title": "Welcome to my updated hub!",
+      "content": "This post was pushed directly from my custom Windows desktop app using the GitHub API!"
+    }
+  ],
+  "comments": [
+    {
+      "user": "Visitor",
+      "text": "Love the site layout!",
+      "date": "May 16, 2026"
+    }
+  ]
+}
