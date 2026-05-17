@@ -248,6 +248,28 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 .comment-date { font-size: 0.7rem; color: #999; float: right; }
 .comment-text { color: #666; margin-top: 4px; }
 
+/* Dynamic Pagination View Controls Button */
+.view-more-toggle-btn {
+    background: white;
+    border: 1px solid rgba(157, 129, 186, 0.25);
+    color: #9d81ba;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.view-more-toggle-btn:hover {
+    background: #9d81ba;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(157, 129, 186, 0.15);
+}
+
 /* --- SEPARATED FOOTER GLASS BUBBLE --- */
 .global-footer-container {
     position: fixed;
