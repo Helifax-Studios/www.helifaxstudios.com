@@ -36,7 +36,7 @@
             <div class="volume-wrapper">
                 <button id="vol-btn" onclick="toggleVolume()">
                     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            </button>
+                </button>
                 <div id="volume-popup" class="volume-popup">
                     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
                 </div>
@@ -45,80 +45,80 @@
         <audio id="main-audio" preload="auto"></audio>
     </div>
 
-    <div id="main-profile-card" class="container">
-        <header>
-            <div class="profile-container">
-                <div id="status-bubble" class="status-bubble">✨ Loading...</div>
-                <div class="profile-pic">
-                    <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
-                </div>
-            </div>
-            <h1>Cyra Helifax &lt;3</h1>
-            <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
-        </header>
-
-        <nav class="links">
-            <button class="link-card highlight-card" onclick="openUpdatesPanel()">📰 View Blog & Updates</button>
-
-            <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
-            <div id="about" class="content-box">
-                <div class="content-inner">
-                    <p>I'm a <strong>student pilot</strong> pursuing a PPL with long-term goals for <strong>United Airlines</strong>. I'm currently a construction truck driver & laborer.</p>
-                    <p style="margin-top: 8px;">I'm 20 years of age and gay as fuck, I love my boyfriend &lt;3.</p>
-                </div>
-            </div>
-
-            <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
-            <div id="projects" class="content-box">
-                <div class="content-inner">
-                    <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and fiction writing. Currently working on Yunari and The Stars, a book of mine.</p>
-                </div>
-            </div>
-
-            <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
-            <div id="contact" class="content-box">
-                <div class="content-inner">
-                    <div class="contact-grid">
-                        <a href="https://www.roblox.com/users/120940577/profile" target="_blank" class="contact-btn">Roblox</a>
-                        <a href="https://www.instagram.com/cyrahelifax/" target="_blank" class="contact-btn">Instagram</a>
-                        <a href="https://steamcommunity.com/id/cyrahelifax/" target="_blank" class="contact-btn">Steam</a>
-                        <button class="contact-btn" onclick="copyDiscord()">Discord</button>
+    <div class="master-hub-wrapper">
+        
+        <div id="main-profile-card" class="container">
+            <header>
+                <div class="profile-container">
+                    <div id="status-bubble" class="status-bubble">✨ Loading...</div>
+                    <div class="profile-pic">
+                        <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
                     </div>
                 </div>
-            </div>
-        </nav>
+                <h1>Cyra Helifax &lt;3</h1>
+                <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
+            </header>
 
-        <footer>
-            <p>2026 &copy; Helifax Studios</p>
-        </footer>
+            <nav class="links">
+                <button id="blog-toggle-btn" class="link-card highlight-card" onclick="toggleUpdatesPanel()">📰 View Blog & Updates</button>
+
+                <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
+                <div id="about" class="content-box">
+                    <div class="content-inner">
+                        <p>I'm a <strong>student pilot</strong> pursuing a PPL with long-term goals for <strong>United Airlines</strong>. I'm currently a construction truck driver & laborer.</p>
+                        <p style="margin-top: 8px;">I'm 20 years of age and gay as fuck, I love my boyfriend &lt;3.</p>
+                    </div>
+                </div>
+
+                <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
+                <div id="projects" class="content-box">
+                    <div class="content-inner">
+                        <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and fiction writing. Currently working on Yunari and The Stars, a book of mine.</p>
+                    </div>
+                </div>
+
+                <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
+                <div id="contact" class="content-box">
+                    <div class="content-inner">
+                        <div class="contact-grid">
+                            <a href="https://www.roblox.com/users/120940577/profile" target="_blank" class="contact-btn">Roblox</a>
+                            <a href="https://www.instagram.com/cyrahelifax/" target="_blank" class="contact-btn">Instagram</a>
+                            <a href="https://steamcommunity.com/id/cyrahelifax/" target="_blank" class="contact-btn">Steam</a>
+                            <button class="contact-btn" onclick="copyDiscord()">Discord</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="updates-panel" class="container wide-layout hidden-panel">
+            <header style="margin-bottom: 20px;">
+                <h1>Logs & Activity Feed</h1>
+                <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
+            </header>
+
+            <div class="feed-section">
+                <h2>Previous Statuses</h2>
+                <ul id="history-container" class="history-list"></ul>
+            </div>
+
+            <div class="feed-section">
+                <h2>Blog Updates</h2>
+                <div id="blog-container"></div>
+            </div>
+
+            <div class="feed-section">
+                <h2>Comments & Mentions</h2>
+                <div id="comments-container"></div>
+            </div>
+        </div>
+
     </div>
 
-    <div id="updates-panel" class="container wide-layout hidden-panel">
-        <button class="back-home" onclick="closeUpdatesPanel()">← Back to Profile</button>
-        
-        <header style="margin-bottom: 20px;">
-            <h1>Logs & Activity Feed</h1>
-            <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
-        </header>
-
-        <div class="feed-section">
-            <h2>Previous Statuses</h2>
-            <ul id="history-container" class="history-list"></ul>
+    <div class="global-footer-container">
+        <div class="footer-bubble">
+            <span>2026 &copy; Helifax Studios</span>
         </div>
-
-        <div class="feed-section">
-            <h2>Blog Updates</h2>
-            <div id="blog-container"></div>
-        </div>
-
-        <div class="feed-section">
-            <h2>Comments & Mentions</h2>
-            <div id="comments-container"></div>
-        </div>
-
-        <footer>
-            <p>2026 &copy; Helifax Studios</p>
-        </footer>
     </div>
 
     <script>
@@ -143,10 +143,8 @@
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 const data = await response.json();
                 
-                // Set the current landing bubble
                 document.getElementById('status-bubble').innerText = data.currentStatus || "No live status";
 
-                // Setup the archived status column logs
                 const historyContainer = document.getElementById('history-container');
                 historyContainer.innerHTML = data.statusHistory.length === 0 ? '<li class="history-item">No archived statuses</li>' : '';
                 data.statusHistory.slice(0, 5).forEach(status => {
@@ -156,7 +154,6 @@
                     historyContainer.appendChild(li);
                 });
 
-                // Setup the blogs layer grid
                 const blogContainer = document.getElementById('blog-container');
                 blogContainer.innerHTML = data.blogs.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No updates logged yet.</p>' : '';
                 data.blogs.slice().reverse().forEach(post => {
@@ -166,7 +163,6 @@
                     blogContainer.appendChild(div);
                 });
 
-                // Setup guestbook comments logs
                 const commentsContainer = document.getElementById('comments-container');
                 commentsContainer.innerHTML = data.comments.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No comments left yet.</p>' : '';
                 data.comments.slice().reverse().forEach(comment => {
@@ -182,17 +178,18 @@
             }
         }
 
-        // Panel toggle interactions
-        function openUpdatesPanel() {
-            document.getElementById('main-profile-card').style.display = 'none';
-            document.getElementById('updates-panel').classList.remove('hidden-panel');
-            window.scrollTo(0,0);
-        }
-
-        function closeUpdatesPanel() {
-            document.getElementById('updates-panel').classList.add('hidden-panel');
-            document.getElementById('main-profile-card').style.display = 'block';
-            window.scrollTo(0,0);
+        // Handles the clean sliding side-by-side transition animations
+        function toggleUpdatesPanel() {
+            const panel = document.getElementById('updates-panel');
+            const toggleBtn = document.getElementById('blog-toggle-btn');
+            
+            if (panel.classList.contains('hidden-panel')) {
+                panel.classList.remove('hidden-panel');
+                toggleBtn.innerText = "📰 Close Blog & Updates";
+            } else {
+                panel.classList.add('hidden-panel');
+                toggleBtn.innerText = "📰 View Blog & Updates";
+            }
         }
 
         function toggleSection(sectionId) {
@@ -255,7 +252,7 @@
                 playIcon.style.display = "none";
                 pauseIcon.style.display = "block";
             } catch (err) {
-                console.log("Interaction required to audio track trigger.");
+                console.log("Audio interaction hook waiting.");
             }
             
             document.getElementById("player").classList.add('visible');
