@@ -8,6 +8,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <div id="player" class="mini-player visible">
+        <img id="track-art" src="art1.png" alt="Art" onerror="this.src='https://via.placeholder.com/45/000000/FFFFFF?text=ART'">
+        <div class="track-info">
+            <div id="track-name">Loading...</div>
+            <div id="track-artist">Artist</div>
+        </div>
+        
+        <div class="controls">
+            <button id="play-pause-btn" onclick="togglePlay()">
+                <svg id="play-icon" viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pause-icon" style="display:none;" viewBox="0 0 24 24" width="22" height="22"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+
+            <button id="skip-btn" onclick="nextTrack()">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+            
+            <div class="volume-wrapper">
+                <button id="vol-btn" onclick="toggleVolume()">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <div id="volume-popup" class="volume-popup">
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="changeVolume(this.value)">
+                </div>
+            </div>
+        </div>
+        <audio id="main-audio" preload="auto"></audio>
+    </div>
+
     <div class="container wide-layout">
         <a href="index.html" class="back-home">← Back to Profile</a>
         
@@ -18,20 +48,17 @@
 
         <div class="feed-section">
             <h2>Previous Statuses</h2>
-            <ul id="history-container" class="history-list">
-                </ul>
+            <ul id="history-container" class="history-list"></ul>
         </div>
 
         <div class="feed-section">
             <h2>Blog Updates</h2>
-            <div id="blog-container">
-                </div>
+            <div id="blog-container"></div>
         </div>
 
         <div class="feed-section">
             <h2>Comments & Mentions</h2>
-            <div id="comments-container">
-                </div>
+            <div id="comments-container"></div>
         </div>
 
         <footer>
@@ -40,12 +67,27 @@
     </div>
 
     <script>
+        const playlist = [
+            { name: "In My Angel's Eyes", artist: "Ryan Peter Murphy", src: "https://file.garden/agk3lSfMyBH0PDWd/angel%20eyes.mp3", art: "art7.jpg" },
+            { name: "Wild Side", artist: "ALI", src: "https://files.catbox.moe/sj72f4.mp3", art: "art1.png" }, 
+            { name: "Lydia", artist: "Highly Suspect", src: "https://files.catbox.moe/sqhwuf.mp3", art: "art2.png" },
+            { name: "Jet Lag Mouth", artist: "In Color", src: "https://files.catbox.moe/go655j.mp3", art: "art3.png" },
+            { name: "CHUCK THE MONEY", artist: "Stephen Sanchez", src: "https://files.catbox.moe/fv6cx6.mp3", art: "art4.png" },
+            { name: "I Don't Care", artist: "Fall Out Boy", src: "https://files.catbox.moe/ltlxt9.mp3", art: "art5.png" },
+            { name: "glitter ✩‧₊˚", artist: "lexycat", src: "https://files.catbox.moe/7ye98c.mp3", art: "art6.png" }
+        ];
+
+        let currentTrack = 0;
+        const audio = document.getElementById("main-audio");
+        const playIcon = document.getElementById("play-icon");
+        const pauseIcon = document.getElementById("pause-icon");
+        const volPopup = document.getElementById("volume-popup");
+
         async function fetchFeedData() {
             try {
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 const data = await response.json();
 
-                // 1. Map Status History
                 const historyContainer = document.getElementById('history-container');
                 historyContainer.innerHTML = data.statusHistory.length === 0 ? '<li class="history-item">No archived statuses</li>' : '';
                 data.statusHistory.slice(0, 5).forEach(status => {
@@ -55,41 +97,101 @@
                     historyContainer.appendChild(li);
                 });
 
-                // 2. Map Blog Cards
                 const blogContainer = document.getElementById('blog-container');
                 blogContainer.innerHTML = data.blogs.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No updates logged yet.</p>' : '';
-                data.blogs.reverse().forEach(post => {
+                data.blogs.slice().reverse().forEach(post => {
                     const div = document.createElement('div');
                     div.className = 'blog-card';
-                    div.innerHTML = `
-                        <div class="blog-meta">${post.date}</div>
-                        <h3>${post.title}</h3>
-                        <p>${post.content}</p>
-                    `;
+                    div.innerHTML = `<div class="blog-meta">${post.date}</div><h3>${post.title}</h3><p>${post.content}</p>`;
                     blogContainer.appendChild(div);
                 });
 
-                // 3. Map Guestbook comments
                 const commentsContainer = document.getElementById('comments-container');
                 commentsContainer.innerHTML = data.comments.length === 0 ? '<p style="font-size:0.85rem; color:#888;">No comments left yet.</p>' : '';
-                data.comments.reverse().forEach(comment => {
+                data.comments.slice().reverse().forEach(comment => {
                     const div = document.createElement('div');
                     div.className = 'comment-card';
-                    div.innerHTML = `
-                        <div>
-                            <span class="comment-user">${comment.user}</span>
-                            <span class="comment-date">${comment.date}</span>
-                        </div>
-                        <div class="comment-text">${comment.text}</div>
-                    `;
+                    div.innerHTML = `<div><span class="comment-user">${comment.user}</span><span class="comment-date">${comment.date}</span></div><div class="comment-text">${comment.text}</div>`;
                     commentsContainer.appendChild(div);
                 });
-
             } catch (err) {
                 console.error("Failed parsing status stream data file:", err);
             }
         }
-        window.addEventListener('DOMContentLoaded', fetchFeedData);
+
+        function loadTrack(index) {
+            const track = playlist[index];
+            audio.src = track.src;
+            document.getElementById("track-name").innerText = track.name;
+            document.getElementById("track-artist").innerText = track.artist;
+            document.getElementById("track-art").src = track.art;
+            audio.load();
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+                localStorage.setItem('music_playing', 'true');
+            } else {
+                audio.pause();
+                playIcon.style.display = "block";
+                pauseIcon.style.display = "none";
+                localStorage.setItem('music_playing', 'false');
+            }
+        }
+
+        function nextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            localStorage.setItem('music_track_index', currentTrack);
+            localStorage.setItem('music_position', '0');
+            loadTrack(currentTrack);
+            audio.play().then(() => {
+                playIcon.style.display = "none";
+                pauseIcon.style.display = "block";
+                localStorage.setItem('music_playing', 'true');
+            });
+        }
+
+        function toggleVolume() { volPopup.classList.toggle('show'); }
+        function changeVolume(val) {
+            audio.volume = Math.pow(val, 3.5);
+            localStorage.setItem('music_volume', val);
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            localStorage.setItem('music_position', audio.currentTime);
+        });
+        audio.onended = () => { nextTrack(); };
+
+        async function syncAudioFeed() {
+            localStorage.setItem('overlay_bypassed', 'true');
+            
+            currentTrack = parseInt(localStorage.getItem('music_track_index') || '0');
+            const savedPosition = parseFloat(localStorage.getItem('music_position') || '0');
+            const wasPlaying = localStorage.getItem('music_playing') === 'true';
+            const savedVolume = localStorage.getItem('music_volume') || '0.5';
+
+            loadTrack(currentTrack);
+            audio.currentTime = savedPosition;
+            
+            document.getElementById("volume-slider").value = savedVolume;
+            changeVolume(savedVolume);
+
+            if (wasPlaying) {
+                try {
+                    await audio.play();
+                    playIcon.style.display = "none";
+                    pauseIcon.style.display = "block";
+                } catch(e) {}
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchFeedData();
+            syncAudioFeed();
+        });
     </script>
 </body>
 </html>
