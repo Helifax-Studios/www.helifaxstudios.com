@@ -1,13 +1,13 @@
 {
-  "currentStatus": "Thinking about my boyfriend \u003C3",
+  "currentStatus": "I love my boyfrin \u003C3",
   "statusHistory": [
+    "Thinking about my boyfriend \u003C3",
     "Dreaming up code \u0026 working on updates! \u2728",
     "Thinking about Blender rigs...",
     "Ground school studying day \u2708\uFE0F"
   ],
   "blogs": [
     {
-      "id": 1,
       "date": "May 16, 2026",
       "title": "Welcome to my updated hub!",
       "content": "This post was pushed directly from my custom Windows desktop app using the GitHub API!"
@@ -16,8 +16,8 @@
   "comments": [
     {
       "user": "Visitor",
-      "text": "Love the site layout!",
-      "date": "May 16, 2026"
+      "date": "May 16, 2026",
+      "text": "Love the site layout!"
     }
   ]
 }
