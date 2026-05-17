@@ -14,7 +14,7 @@ body {
     position: relative;
 }
 
-/* --- Moving Background Layer via Pseudo-Element --- */
+/* --- Smooth Pseudo-Canvas Moving Gradient Backing --- */
 body::before {
     content: "";
     position: fixed;
@@ -34,7 +34,7 @@ body::before {
     100% { transform: translate(0, 0); }
 }
 
-/* --- Profile Wrap & Instagram-Style Status Bubble --- */
+/* --- Instagram Style Profile Status Placement --- */
 .profile-container {
     position: relative;
     width: fit-content;
@@ -61,7 +61,6 @@ body::before {
     text-overflow: ellipsis;
 }
 
-/* Tiny indicator bubble pointer */
 .status-bubble::after {
     content: "";
     position: absolute;
@@ -74,7 +73,7 @@ body::before {
     width: 0;
 }
 
-/* --- Mini Player --- */
+/* --- Mini Player UI Layout --- */
 .mini-player {
     position: fixed;
     bottom: 20px;
@@ -105,7 +104,7 @@ body::before {
 svg { fill: #444; transition: 0.2s; display: block; }
 button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 
-/* --- Volume Popup --- */
+/* --- Volume Drawer Configuration --- */
 .volume-wrapper { position: relative; display: flex; align-items: center; }
 .volume-popup {
     position: absolute;
@@ -125,7 +124,7 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 #volume-slider { -webkit-appearance: none; width: 80px; height: 5px; background: #f0f0f0; border-radius: 5px; outline: none; cursor: pointer; }
 #volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #9d81ba; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-/* --- Container Card --- */
+/* --- Global Bio Containers --- */
 .container {
     width: 90%; max-width: 380px;
     background: rgba(255, 255, 255, 0.6);
@@ -137,7 +136,6 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
     z-index: 10;
 }
 
-/* Expanded layout constraints for pages containing text content blocks */
 .container.wide-layout {
     max-width: 550px;
     padding: 30px 20px;
@@ -148,31 +146,22 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
 .links { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-.link-card { background: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; color: #444; transition: 0.3s; cursor: pointer; width: 100%; font-size: 0.95rem; text-align: center;}
+.link-card { background: white; border: none; padding: 16px; border-radius: 15px; font-weight: 700; color: #444; transition: 0.3s; cursor: pointer; width: 100%; font-size: 0.95rem; text-align: center; }
 .link-card:hover { background: #9d81ba; color: white; transform: translateY(-2px); }
 
 .content-box { max-height: 0; overflow: hidden; opacity: 0; transition: 0.5s ease; width: 100%; }
 .content-box.active { max-height: 200px; opacity: 1; margin: 10px 0; }
 .content-inner { padding: 15px; text-align: left; font-size: 0.9rem; color: #666; line-height: 1.5; }
 
-/* --- Contact Grid --- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
 .contact-btn {
-    background: white;
-    border: 1px solid #eee;
-    padding: 12px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #555;
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
+    background: white; border: 1px solid #eee; padding: 12px; border-radius: 12px;
+    text-decoration: none; color: #555; font-size: 0.85rem; font-weight: 700; text-align: center;
+    cursor: pointer; transition: 0.2s;
 }
 .contact-btn:hover { background: #f8f8f8; border-color: #9d81ba; color: #9d81ba; }
 
-/* --- Update Feed Elements --- */
+/* --- Architecture Layout Updates Feed --- */
 .back-home { display: inline-block; text-decoration: none; color: #9d81ba; font-weight: 700; font-size: 0.9rem; margin-bottom: 20px; transition: 0.2s; }
 .back-home:hover { opacity: 0.7; transform: translateX(-2px); }
 
