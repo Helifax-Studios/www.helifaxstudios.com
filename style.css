@@ -34,6 +34,25 @@ body::before {
     100% { transform: translate(0, 0); }
 }
 
+
+/* --- Seamless Layout Panel Visibility Settings --- */
+.hidden-panel {
+    display: none !important;
+}
+
+.highlight-card {
+    border: 1px solid rgba(157, 129, 186, 0.4);
+    background: linear-gradient(135deg, #ffffff 0%, #f9f6fc 100%);
+}
+
+.back-home {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    outline: none;
+}
+
 /* --- Instagram Style Profile Status Placement --- */
 .profile-container {
     position: relative;
