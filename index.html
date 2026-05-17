@@ -47,74 +47,76 @@
         <audio id="main-audio" preload="auto"></audio>
     </div>
 
-    <div class="master-hub-wrapper">
-        
-        <div id="main-profile-card" class="container">
-            <header>
-                <div class="profile-container">
-                    <div id="status-bubble" class="status-bubble">✨ Loading...</div>
-                    <div class="profile-pic">
-                        <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
-                    </div>
-                </div>
-                <h1>Cyra Helifax &lt;3</h1>
-                <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
-            </header>
-
-            <nav class="links">
-                <button id="blog-toggle-btn" class="link-card highlight-card" onclick="toggleUpdatesPanel()">📰 View Blog & Updates</button>
-
-                <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
-                <div id="about" class="content-box">
-                    <div class="content-inner">
-                        <p>I'm a <strong>student pilot</strong> pursuing a PPL with long-term goals for <strong>United Airlines</strong>. I'm currently a construction truck driver & laborer.</p>
-                        <p style="margin-top: 8px;">I'm 20 years of age and gay as fuck, I love my boyfriend &lt;3.</p>
-                    </div>
-                </div>
-
-                <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
-                <div id="projects" class="content-box">
-                    <div class="content-inner">
-                        <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and fiction writing. Currently working on Yunari and The Stars, a book of mine.</p>
-                    </div>
-                </div>
-
-                <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
-                <div id="contact" class="content-box">
-                    <div class="content-inner">
-                        <div class="contact-grid">
-                            <a href="https://www.roblox.com/users/120940577/profile" target="_blank" class="contact-btn">Roblox</a>
-                            <a href="https://www.instagram.com/cyrahelifax/" target="_blank" class="contact-btn">Instagram</a>
-                            <a href="https://steamcommunity.com/id/cyrahelifax/" target="_blank" class="contact-btn">Steam</a>
-                            <button class="contact-btn" onclick="copyDiscord()">Discord</button>
+    <div class="master-viewport-center">
+        <div class="master-hub-wrapper">
+            
+            <div id="main-profile-card" class="container">
+                <header>
+                    <div class="profile-container">
+                        <div id="status-bubble" class="status-bubble">✨ Loading...</div>
+                        <div class="profile-pic">
+                            <img src="profile.png" alt="Profile" onerror="this.src='https://via.placeholder.com/90'">
                         </div>
                     </div>
+                    <h1>Cyra Helifax &lt;3</h1>
+                    <p class="tagline">Student Pilot • 3D Artist • Gamer</p>
+                </header>
+
+                <nav class="links">
+                    <button id="blog-toggle-btn" class="link-card highlight-card" onclick="toggleUpdatesPanel()">📰 View Blog & Updates</button>
+
+                    <button class="link-card" onclick="toggleSection('about')">✨ About Me</button>
+                    <div id="about" class="content-box">
+                        <div class="content-inner">
+                            <p>I'm a <strong>student pilot</strong> pursuing a PPL with long-term goals for <strong>United Airlines</strong>. I'm currently a construction truck driver & laborer.</p>
+                            <p style="margin-top: 8px;">I'm 20 years of age and gay as fuck, I love my boyfriend &lt;3.</p>
+                        </div>
+                    </div>
+
+                    <button class="link-card" onclick="toggleSection('projects')">🚀 Creative Work</button>
+                    <div id="projects" class="content-box">
+                        <div class="content-inner">
+                            <p>Specializing in <strong>3D modeling</strong> in Blender 5.0.1 and fiction writing. Currently working on Yunari and The Stars, a book of mine.</p>
+                        </div>
+                    </div>
+
+                    <button class="link-card" onclick="toggleSection('contact')">📩 Contact</button>
+                    <div id="contact" class="content-box">
+                        <div class="content-inner">
+                            <div class="contact-grid">
+                                <a href="https://www.roblox.com/users/120940577/profile" target="_blank" class="contact-btn">Roblox</a>
+                                <a href="https://www.instagram.com/cyrahelifax/" target="_blank" class="contact-btn">Instagram</a>
+                                <a href="https://steamcommunity.com/id/cyrahelifax/" target="_blank" class="contact-btn">Steam</a>
+                                <button class="contact-btn" onclick="copyDiscord()">Discord</button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="updates-panel" class="container wide-layout hidden-panel">
+                <header style="margin-bottom: 20px;">
+                    <h1>Logs & Activity Feed</h1>
+                    <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
+                </header>
+
+                <div class="feed-section">
+                    <h2>Previous Statuses</h2>
+                    <ul id="history-container" class="history-list"></ul>
                 </div>
-            </nav>
+
+                <div class="feed-section">
+                    <h2>Blog Updates</h2>
+                    <div id="blog-container"></div>
+                </div>
+
+                <div class="feed-section">
+                    <h2>Comments & Mentions</h2>
+                    <div id="comments-container"></div>
+                </div>
+            </div>
+
         </div>
-
-        <div id="updates-panel" class="container wide-layout hidden-panel">
-            <header style="margin-bottom: 20px;">
-                <h1>Logs & Activity Feed</h1>
-                <p style="color: #777; font-size: 0.9rem;">Real-time feed managed via my desktop workflow application</p>
-            </header>
-
-            <div class="feed-section">
-                <h2>Previous Statuses</h2>
-                <ul id="history-container" class="history-list"></ul>
-            </div>
-
-            <div class="feed-section">
-                <h2>Blog Updates</h2>
-                <div id="blog-container"></div>
-            </div>
-
-            <div class="feed-section">
-                <h2>Comments & Mentions</h2>
-                <div id="comments-container"></div>
-            </div>
-        </div>
-
     </div>
 
     <div class="global-footer-container">
