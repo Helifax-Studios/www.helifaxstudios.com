@@ -6,12 +6,10 @@ html, body {
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Forces total vertical centering on your cards */
     font-family: 'Outfit', sans-serif;
     overflow-x: hidden;
     position: relative;
+    background: #fbfbfb;
 }
 
 /* --- Canvas Backing Moving Gradient --- */
@@ -34,16 +32,25 @@ body::before {
     100% { transform: translate(0, 0); }
 }
 
+/* --- ABSOLUTE VIEWPORT VERTICAL & HORIZONTAL CENTERING ANCHOR --- */
+.master-viewport-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 60px 20px 100px 20px;
+}
+
 /* --- Master Side-by-Side Flex Slider Wrapper --- */
 .master-hub-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: center; /* Aligns columns perfectly along their center line */
+    align-items: center; 
     justify-content: center;
     gap: 30px; 
     width: 100%;
     max-width: 960px;
-    padding: 20px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -120,7 +127,6 @@ body::before {
 #track-name { font-size: 0.85rem; font-weight: 700; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #track-artist { font-size: 0.75rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Fixed: Dedicated structural flex rules to anchor control switches */
 .controls-wrapper {
     display: flex;
     align-items: center;
@@ -277,14 +283,13 @@ button:hover svg { fill: #9d81ba; transform: scale(1.1); }
 
 /* Responsive adjustments for mobile screen layouts */
 @media (max-width: 860px) {
+    .master-viewport-center {
+        align-items: flex-start; /* Let contents scale down normally if screen height is too small */
+        padding-top: 40px;
+    }
     .master-hub-wrapper {
         flex-direction: column;
         align-items: center;
-        margin-top: 40px;
-    }
-    body { 
-        align-items: flex-start;
-        overflow-y: auto;
     }
     .global-footer-container {
         position: relative;
