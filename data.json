@@ -11,6 +11,11 @@
       "date": "May 16, 2026",
       "title": "Welcome to my updated hub!",
       "content": "This post was pushed directly from my custom Windows desktop app using the GitHub API!"
+    },
+    {
+      "date": "May 17, 2026",
+      "title": "Website Update",
+      "content": "Today I updated the website, added a view more for blogs and statuses, as well as created an app for my computer where I can directly add updates to the blog, status, and comments! Huge W!"
     }
   ],
   "comments": [
