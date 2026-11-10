@@ -6,13 +6,12 @@
     <title>Quick Links // Helifax Studios</title>
     <style>
         :root {
-            --bg-overlay: rgba(18, 19, 24, 0.82);
-            --card-dark: rgba(33, 37, 45, 0.75);
-            --card-hover: rgba(43, 48, 58, 0.88);
-            --accent-lavender: #D8B4FE;
-            --accent-glow: rgba(216, 180, 254, 0.3);
-            --text-light: #F3F4F6;
-            --text-muted: #9CA3AF;
+            --card-coffee: rgba(200, 177, 158, 0.28);
+            --card-hover: rgba(200, 177, 158, 0.45);
+            --border-coffee: rgba(200, 177, 158, 0.4);
+            --accent-glow: rgba(200, 177, 158, 0.25);
+            --text-light: #F9FAFB;
+            --text-muted: #D1D5DB;
         }
 
         * {
@@ -34,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* Background Video Styles */
+        /* Background Video Styles (Overlay Removed) */
         .bg-video {
             position: fixed;
             top: 0;
@@ -42,18 +41,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -2;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-overlay);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             z-index: -1;
         }
 
@@ -68,6 +55,7 @@
         .profile-header {
             text-align: center;
             margin-bottom: 2rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         .profile-title {
@@ -80,7 +68,7 @@
 
         .profile-subtitle {
             font-size: 0.75rem;
-            color: var(--accent-lavender);
+            color: #E5D5C5;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -93,8 +81,8 @@
         }
 
         .link-card {
-            background-color: var(--card-dark);
-            border: 1px solid rgba(216, 180, 254, 0.12);
+            background-color: var(--card-coffee);
+            border: 1px solid var(--border-coffee);
             border-radius: 12px;
             padding: 0.95rem 1.25rem;
             display: flex;
@@ -103,12 +91,13 @@
             text-decoration: none;
             color: var(--text-light);
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .link-card:hover {
             background-color: var(--card-hover);
-            border-color: var(--accent-lavender);
+            border-color: #E5D5C5;
             transform: translateY(-2px);
             box-shadow: 0 8px 24px var(--accent-glow);
         }
@@ -125,7 +114,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            fill: var(--accent-lavender);
+            fill: #E5D5C5;
         }
 
         .link-text h3 {
@@ -143,7 +132,7 @@
 
         .link-card:hover .link-arrow {
             transform: translateX(4px);
-            color: var(--accent-lavender);
+            color: #E5D5C5;
         }
 
         .back-home {
@@ -152,21 +141,20 @@
             color: var(--text-muted);
             text-decoration: none;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
             transition: color 0.2s;
         }
 
         .back-home:hover {
-            color: var(--accent-lavender);
+            color: #E5D5C5;
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Video (Replace 'background.mp4' with your video file path) -->
     <video autoplay muted loop class="bg-video">
         <source src="/1835862-1.output.mp4" type="video/mp4">
     </video>
-    <div class="bg-overlay"></div>
 
     <div class="container">
         <div class="profile-header">
@@ -176,7 +164,6 @@
 
         <div class="links-list">
             
-            <!-- Discord -->
             <a href="https://discord.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -189,7 +176,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- Roblox -->
             <a href="https://www.roblox.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -202,7 +188,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- Instagram -->
             <a href="https://www.instagram.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -215,7 +200,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- YouTube -->
             <a href="https://www.youtube.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -228,7 +212,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- Everythingmoe -->
             <a href="https://everythingmoe.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -241,7 +224,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- Gemini -->
             <a href="https://gemini.google.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
@@ -254,7 +236,6 @@
                 <div class="link-arrow">&rarr;</div>
             </a>
 
-            <!-- Blank Google Page -->
             <a href="https://www.google.com" target="_blank" class="link-card">
                 <div class="link-content">
                     <div class="link-icon">
